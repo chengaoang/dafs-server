@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sangeng.mapper.CategoryMapper">
+
+    <resultMap id="categoryMap" type="com.sangeng.data.Category">
+        <result property="desc" column="description"/>
+    </resultMap>
+
+    <select id="sellectAll" resultMap="categoryMap">
+        select * from data_category
+    </select>
+
+    <select id="getCount" resultType="integer">
+        select ifnull(count(*), 0) from data_category
+    </select>
+
+    <select id="limit" resultMap="categoryMap">
+        select * from data_category limit #{first},#{second};
+    </select>
+
+    <select id="getOneById" resultMap="categoryMap">
+        select * from data_category where id = #{id}
+    </select>
+
+    <insert id="insert">
+        insert into data_category (path, name, description, createBy, created, updateBy, updated, status)
+            values (#{path},#{name},#{desc},#{createBy},#{created},#{updateBy},#{updated},#{status})
+    </insert>
+
+    <update id="update">
+        update data_category
+            set name=#{name},path=#{path},description=#{desc},createBy=#{createBy},created=#{created}
+              ,updateBy=#{updateBy},updated=#{updated},status=#{status} where id=#{id};
+    </update>
+
+</mapper>

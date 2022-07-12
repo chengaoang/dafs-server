@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sangeng.mapper.ProductsMapper">
+    <resultMap id="productsMap" type="com.sangeng.data.Products">
+        <result property="desc" column="description"/>
+    </resultMap>
+    <insert id="insertOne">
+        insert into data_products (cid, name, images, description) value (#{cid},#{name},#{images},#{desc})
+    </insert>
+    <update id="updateByPid">
+        update data_products set cid=#{cid},status=#{status},name=#{name},images=#{images},description=#{desc} where pid=#{pid};
+    </update>
+    <select id="getAll" resultMap="productsMap">
+        select * from data_products
+    </select>
+    <select id="getOneById" resultMap="productsMap">
+        select * from data_products where pid = #{id}
+    </select>
+    <select id="limit" resultMap="productsMap">
+        select * from data_products limit #{first},#{second};
+    </select>
+    <select id="getCount" resultType="integer">
+        select ifnull(count(*), 0) from data_products
+    </select>
+    <select id="sellectProductBycategoryId" resultMap="productsMap">
+        select * from data_products where cid=#{cid} and status=0
+    </select>
+    <select id="sellectProductByUId" resultMap="productsMap">
+        select * from data_products where pid in (select cid from data_collection where uid=#{uid})
+    </select>
+</mapper>
